@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
       - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
-      - run: npx --package clever-tools clever deploy
+      - run: npx --package clever-tools clever deploy --force
   
 workflows:
   version: 2
