@@ -14,12 +14,12 @@ jobs:
       - run: npx --package clever-tools clever deploy
   
 workflows:
-    version: 2
+  version: 2
 
-    deploy: 
-        jobs:
-          - deploy-to-clever-cloud
-              context: clever-cloud-zenika-dev
-              filters:
-                    branches:
-                        only: master
+  deploy: 
+    jobs:
+      - deploy-to-clever-cloud:
+          context: clever-cloud-zenika-dev
+          filters:
+            branches:
+              only: master
