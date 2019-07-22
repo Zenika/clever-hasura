@@ -1,0 +1,14 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:lts
+    environment:
+      CLEVER_ORG: orga_6bf89bba-cabf-4a31-960a-c062a9f42b96
+      CLEVER_APP_ID: app_d75e4b94-c2f2-44ff-ac05-00783e90a9ba
+    steps:
+      - checkout
+      - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
+      - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
+      - run: npx --package clever-tools clever deploy
