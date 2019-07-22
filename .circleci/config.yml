@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  build:
+  deploy-to-clever-cloud:
     docker:
       - image: circleci/node:lts
     environment:
@@ -12,3 +12,14 @@ jobs:
       - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
       - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
       - run: npx --package clever-tools clever deploy
+  
+workflows:
+    version: 2
+
+    deploy: 
+        jobs:
+          - deploy-to-clever-cloud
+              context: clever-cloud-zenika-dev
+              filters:
+                    branches:
+                        only: master
