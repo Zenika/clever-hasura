@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:lts
     environment:
       CLEVER_ORG: orga_6bf89bba-cabf-4a31-960a-c062a9f42b96
-      CLEVER_APP_ID: app_d75e4b94-c2f2-44ff-ac05-00783e90a9ba
+      CLEVER_APP_ID: app_2579b99e-f65c-4fc3-83b9-95082cde725f
     steps:
       - checkout
       - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
