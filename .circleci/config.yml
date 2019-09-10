@@ -1,5 +1,10 @@
 version: 2.1
 
+executors:
+  main-executor:
+    docker:
+      - image: circleci/node:lts
+
 jobs:
   deploy:
     executor: main-executor
