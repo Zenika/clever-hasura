@@ -29,14 +29,14 @@ workflows:
   deploy: 
     jobs:
       - deploy:
-          clever-app-id: app_2579b99e-f65c-4fc3-83b9-95082cde725f
-          context: clever-cloud-zenika-dev
+          clever-app-id: app_69c5464d-594e-4c48-863b-07cd050dbfe4
+          context: clever-cloud-zenika
           filters:
             branches:
               only: deploy-to-staging
       - deploy:
-          clever-app-id: app_69c5464d-594e-4c48-863b-07cd050dbfe4
-          context: clever-cloud-zenika
+          clever-app-id: app_2579b99e-f65c-4fc3-83b9-95082cde725f
+          context: clever-cloud-zenika-dev
           filters:
             branches:
               only: master
