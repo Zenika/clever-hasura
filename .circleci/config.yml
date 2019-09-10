@@ -1,6 +1,17 @@
 version: 2
 
 jobs:
+  deploy-to-clever-cloud-staging:
+    docker:
+      - image: circleci/node:lts
+    environment:
+      CLEVER_ORG: orga_363dce7f-5403-48c9-80f6-bb4732abb909
+      CLEVER_APP_ID: app_69c5464d-594e-4c48-863b-07cd050dbfe4
+    steps:
+      - checkout
+      - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
+      - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
+      - run: npx --package clever-tools clever deploy --force
   deploy-to-clever-cloud:
     docker:
       - image: circleci/node:lts
@@ -20,6 +31,11 @@ workflows:
     jobs:
       - deploy-to-clever-cloud:
           context: clever-cloud-zenika-dev
+          filters:
+            branches:
+              only: deploy-to-staging
+      - deploy-to-clever-cloud-staging:
+          context: clever-cloud-zenika
           filters:
             branches:
               only: master
