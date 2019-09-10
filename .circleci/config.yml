@@ -1,40 +1,39 @@
 version: 2
 
 jobs:
-  deploy-to-clever-cloud-staging:
-    docker:
-      - image: circleci/node:lts
-    environment:
-      CLEVER_ORG: orga_363dce7f-5403-48c9-80f6-bb4732abb909
-      CLEVER_APP_ID: app_69c5464d-594e-4c48-863b-07cd050dbfe4
+  deploy:
+    executor: main-executor
+    parameters:
+      clever-app-id:
+        type: string
     steps:
       - checkout
-      - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
-      - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
-      - run: npx --package clever-tools clever deploy --force
-  deploy-to-clever-cloud:
-    docker:
-      - image: circleci/node:lts
-    environment:
-      CLEVER_ORG: orga_6bf89bba-cabf-4a31-960a-c062a9f42b96
-      CLEVER_APP_ID: app_2579b99e-f65c-4fc3-83b9-95082cde725f
-    steps:
-      - checkout
-      - run: npx --package clever-tools clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
-      - run: npx --package clever-tools clever link --org=$CLEVER_ORG $CLEVER_APP_ID
-      - run: npx --package clever-tools clever deploy --force
+      - attach_workspace:
+          at: ./
+      - run: sudo npm install --global clever-tools
+      - run:
+          command: clever login --token=$CLEVER_TOKEN --secret=$CLEVER_SECRET
+          working_directory: ~/deploy
+      - run:
+          command: clever link << parameters.clever-app-id >>
+          working_directory: ~/deploy
+      - run:
+          command: clever deploy --force
+          working_directory: ~/deploy
   
 workflows:
   version: 2
 
   deploy: 
     jobs:
-      - deploy-to-clever-cloud:
+      - deploy:
+          clever-app-id: app_2579b99e-f65c-4fc3-83b9-95082cde725f
           context: clever-cloud-zenika-dev
           filters:
             branches:
               only: deploy-to-staging
-      - deploy-to-clever-cloud-staging:
+      - deploy:
+          clever-app-id: app_69c5464d-594e-4c48-863b-07cd050dbfe4
           context: clever-cloud-zenika
           filters:
             branches:
