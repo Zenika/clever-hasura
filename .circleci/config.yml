@@ -33,7 +33,7 @@ workflows:
           context: clever-cloud-zenika
           filters:
             branches:
-              only: deploy-to-staging
+              only: master
       - deploy:
           clever-app-id: app_2579b99e-f65c-4fc3-83b9-95082cde725f
           context: clever-cloud-zenika-dev
