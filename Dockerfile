@@ -1,4 +1,4 @@
-FROM hasura/graphql-engine:v1.0.0-beta.9
+FROM hasura/graphql-engine:v1.0.0-rc.1
 
 ARG PORT
 ARG POSTGRESQL_ADDON_DB
